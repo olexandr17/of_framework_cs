@@ -3,8 +3,17 @@ using System.Net.Mail;
 
 namespace OFClassLibrary.Common.Net
 {
-    public class GMail
+    public static class GMail
     {
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fromAddress"></param>
+        /// <param name="fromPassword"></param>
+        /// <param name="toAddress"></param>
+        /// <param name="subject"></param>
+        /// <param name="body"></param>
         public static void SendFrom(string fromAddress, string fromPassword, string toAddress, string subject, string body)
         {
             var smtp = new SmtpClient
