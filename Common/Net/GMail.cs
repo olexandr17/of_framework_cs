@@ -16,7 +16,7 @@ namespace OFClassLibrary.Common.Net
         /// <param name="body"></param>
         public static void SendFrom(string fromAddress, string fromPassword, string toAddress, string subject, string body)
         {
-            var smtp = new SmtpClient
+            var smtp = new SmtpClient()
             {
                 Host = "smtp.gmail.com",
                 Port = 587,

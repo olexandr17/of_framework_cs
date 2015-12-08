@@ -6,45 +6,26 @@ namespace OFClassLibrary.Frameworks.WinForms
     public static class AutorunHelper
     {
 
-        public static string KeyPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
+        private static readonly RegistryHive Hive = RegistryHive.CurrentUser;
+        private const string KeyPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="appName"></param>
         /// <returns></returns>
-        public static bool IsAutorun(string appName)
-        {
-            using (var rkApp = Registry.CurrentUser.OpenSubKey(KeyPath, true))
-            {
-                return rkApp.GetValue(appName) != null;
-            }
-        }
+        public static bool IsAutorun(string appName) => RegistryHelper.Has(Hive, KeyPath, appName);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="appName"></param>
-        public static void AddAutorun(string appName)
-        {
-            using(var rkApp = Registry.CurrentUser.OpenSubKey(KeyPath, true))
-            {
-                if (!IsAutorun(appName))
-                    rkApp.SetValue(appName, Application.ExecutablePath.ToString());
-            }
-        }
+        public static void AddAutorun(string appName) => RegistryHelper.Write(Hive, KeyPath, appName, Application.ExecutablePath.ToString());
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="appName"></param>
-        public static void DeleteAutorun(string appName)
-        {
-            using (var rkApp = Registry.CurrentUser.OpenSubKey(KeyPath, true))
-            {
-                if (IsAutorun(appName))
-                    rkApp.DeleteValue(appName, false);
-            }
-        }
+        public static void DeleteAutorun(string appName) => RegistryHelper.Delete(Hive, KeyPath, appName);
     }
 }
